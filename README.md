@@ -1,75 +1,47 @@
-# React + TypeScript + Vite
+## Task: Implement Premium 3D RFID Model Loading Indicator ONLY
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Implement a professional loading indicator inside the existing 3D RFID product viewer while the RFID reader GLB model is loading.
 
-Currently, two official plugins are available:
+### Requirements
+1. Display a centered loading UI inside the existing 3D viewer.
+2. Show the title: **Loading RFID Reader**
+3. Show actual GLB loading progress percentage (0–100%) whenever available.
+4. Display a smooth animated progress bar.
+5. Use a clean, premium design consistent with the existing application theme.
+6. Support both Light Mode and Dark Mode.
+7. Hide the loader automatically when the GLB model is fully loaded and ready to render.
+8. Do not use artificial loading delays or fake progress.
+9. Prevent a blank viewer while the model is loading.
+10. If loading fails, show a simple error message with a Retry action.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Technical Requirements
+- Inspect the existing GLB loading implementation first.
+- Reuse the existing Three.js / React Three Fiber / Drei loading mechanism.
+- Use actual loading progress.
+- Do not unnecessarily remount the Canvas.
+- Preserve existing GLB caching and rendering behaviour.
 
-## React Compiler
+### STRICT SCOPE
+Modify ONLY the model loading indicator.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+DO NOT modify:
+- Background or page design.
+- Glassmorphism or other UI styling.
+- Toast notifications.
+- 3D reader model, geometry or materials.
+- Physical LEDs or LED logic.
+- Camera, FOV, zoom or OrbitControls.
+- RFID card design or animation.
+- RFID punch logic, audio or employee selection.
+- Activity logs, counters or dashboard.
+- Dark Mode design or theme settings.
 
-## Expanding the ESLint configuration
+### Verification
+Test in visible Google Chrome Dev:
+- Initial page load shows the loader inside the viewer.
+- Actual progress is displayed when available.
+- Loader disappears after the model loads.
+- No model-loading toast appears.
+- Existing RFID functionality remains unchanged.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+**Acceptance Criteria: Only the in-viewer 3D model loader is added. No unrelated files or features should be changed.**
