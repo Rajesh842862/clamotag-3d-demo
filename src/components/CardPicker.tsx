@@ -16,7 +16,13 @@ function EmployeeCard({ employee }: { employee: Employee }) {
     >
       <span className="credential-top">
         <span className="credential-mark">{employee.initials}</span>
-        <CreditCard size={16} strokeWidth={1.6} aria-hidden="true" />
+        {selected ? (
+          <span className="credential-check" aria-hidden="true">
+            <Check size={13} strokeWidth={2.6} aria-hidden="true" />
+          </span>
+        ) : (
+          <CreditCard size={16} strokeWidth={1.6} aria-hidden="true" />
+        )}
       </span>
       <span className="credential-name">{employee.name}</span>
       <span className="credential-id">{employee.id}</span>
@@ -25,7 +31,11 @@ function EmployeeCard({ employee }: { employee: Employee }) {
           <span className="tone-dot" aria-hidden="true" />
           {employee.department}
         </span>
-        {selected ? <Check size={15} strokeWidth={2.2} aria-hidden="true" /> : null}
+        <span
+          className={`credential-status ${employee.registered ? "is-registered" : "is-unregistered"}`}
+        >
+          {employee.registered ? "Registered" : "Unregistered"}
+        </span>
       </span>
     </button>
   );

@@ -1,5 +1,5 @@
 import { useProgress } from "@react-three/drei";
-import { AlertCircle, RotateCw } from "lucide-react";
+import { AlertCircle, RotateCw, ScanLine } from "lucide-react";
 
 export type ModelLoadStatus = "loading" | "ready" | "error";
 
@@ -28,7 +28,10 @@ export function ModelLoadingOverlay({ status, onRetry }: ModelLoadingOverlayProp
         {status === "loading" ? (
           <>
             <div className="model-load-head">
-              <span className="model-load-title">Loading RFID Reader</span>
+              <span className="model-load-title-wrap">
+                <ScanLine size={17} strokeWidth={1.8} aria-hidden="true" />
+                <span className="model-load-title">Loading RFID Reader</span>
+              </span>
               {hasProgress ? (
                 <span className="model-load-percent">{percent}%</span>
               ) : null}

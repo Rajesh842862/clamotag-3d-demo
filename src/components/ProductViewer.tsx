@@ -34,7 +34,7 @@ export function ProductViewer({ theme }: ProductViewerProps) {
   }, []);
 
   return (
-    <div className="viewer">
+    <div className="viewer" role="region" aria-label="Interactive 3D product viewer">
       <div className="viewer-topbar">
         <span className="viewer-tag">
           <span className="viewer-tag-dot" aria-hidden="true" />

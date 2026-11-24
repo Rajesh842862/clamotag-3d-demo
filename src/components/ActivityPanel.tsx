@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { motion } from "motion/react";
 import { Activity, CheckCircle2, Clock3, Inbox, XCircle, type LucideIcon } from "lucide-react";
-import { formatDate, formatTime } from "../lib/utils";
+import { formatDate, formatDateTime, formatTime } from "../lib/utils";
 import type { EventType, PunchEvent, SyncStatus } from "../lib/types";
 import { useDemo } from "../state/useDemo";
 
@@ -64,7 +64,7 @@ function EventRow({ event }: { event: PunchEvent }) {
         <span className={`event-type event-${event.type}`}>{EVENT_LABEL[event.type]}</span>
       </td>
       <td data-label="Timestamp" className="numeric">
-        <span className="table-time">
+        <span className="table-time" title={formatDateTime(event.timestamp)}>
           <span>{formatDate(event.timestamp)}</span>
           <span className="table-time-secondary">{formatTime(event.timestamp)}</span>
         </span>
@@ -102,11 +102,11 @@ export function ActivityPanel() {
           const MetricIcon = item.icon;
           return (
             <div key={item.id} className="metric">
-              <span className="metric-value">{counts[item.id]}</span>
-              <span className="metric-label">
-                <MetricIcon className="metric-icon" size={15} strokeWidth={2} aria-hidden="true" />
-                {item.label}
+              <span className="metric-icon-chip">
+                <MetricIcon size={16} strokeWidth={2} aria-hidden="true" />
               </span>
+              <span className="metric-value">{counts[item.id]}</span>
+              <span className="metric-label">{item.label}</span>
             </div>
           );
         })}
@@ -142,6 +142,9 @@ export function ActivityPanel() {
 
       <div className="table-wrap">
         <table className="activity-table">
+          <caption className="sr-only">
+            RFID punch activity. Most recent events first.
+          </caption>
           <thead>
             <tr>
               <th scope="col">Employee</th>
