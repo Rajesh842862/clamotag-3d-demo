@@ -1,5 +1,6 @@
 import { MotionConfig } from "motion/react";
 import { Toaster } from "sonner";
+import { AlertTriangle, CheckCircle2, Info, XCircle } from "lucide-react";
 import { Header } from "./components/Header";
 import { ProductViewer } from "./components/ProductViewer";
 import { DeviceConsole } from "./components/DeviceConsole";
@@ -23,7 +24,17 @@ export default function App() {
 
           <main id="main" tabIndex={-1}>
             <section className="intro section-frame" aria-labelledby="page-title">
+              <p className="intro-eyebrow">Industrial IoT · Interactive product experience</p>
               <h1 id="page-title">CLAMOTAG RFID Reader</h1>
+              <p className="intro-lead">
+                Explore the Reader R1 in 3D — present a test card, watch the device LEDs respond,
+                and see every punch recorded, buffered or denied in real time.
+              </p>
+              <ul className="intro-meta" aria-label="Simulation capabilities">
+                <li>Interactive 3D reader</li>
+                <li>Offline buffering</li>
+                <li>AP provisioning</li>
+              </ul>
             </section>
 
             <section className="workspace section-frame" aria-label="Interactive reader and console">
@@ -72,6 +83,13 @@ export default function App() {
           theme={theme}
           duration={4200}
           closeButton
+          gap={10}
+          icons={{
+            success: <CheckCircle2 size={18} strokeWidth={2} aria-hidden="true" />,
+            error: <XCircle size={18} strokeWidth={2} aria-hidden="true" />,
+            info: <Info size={18} strokeWidth={2} aria-hidden="true" />,
+            warning: <AlertTriangle size={18} strokeWidth={2} aria-hidden="true" />,
+          }}
           toastOptions={{ className: "app-toast" }}
         />
       </TooltipProvider>

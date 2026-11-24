@@ -1,5 +1,16 @@
-import { Radio, RotateCcw, RotateCw, ScanLine, Volume2, VolumeX } from "lucide-react";
+import {
+  CheckCircle2,
+  Loader2,
+  Radio,
+  RefreshCw,
+  RotateCcw,
+  RotateCw,
+  ScanLine,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 import { EMPLOYEES, SCENARIOS } from "../lib/data";
+import { formatDateTime } from "../lib/utils";
 import type { LedState, Scenario } from "../lib/types";
 import { useDemo } from "../state/useDemo";
 import { SelectField, type SelectOption } from "./ui/Select";
@@ -51,6 +62,12 @@ export function DeviceConsole() {
             Device console
           </h2>
           <p className="console-subtitle">CLAMOTAG Reader R1 · S/N R1-0042</p>
+          {state.lastSyncAt ? (
+            <p className="last-synced">
+              <CheckCircle2 size={13} strokeWidth={2} aria-hidden="true" />
+              Last synced {formatDateTime(state.lastSyncAt)}
+            </p>
+          ) : null}
         </div>
         <span className={`console-link link-${state.connection}`} role="status">
           <Radio size={14} strokeWidth={1.8} aria-hidden="true" />
@@ -123,7 +140,17 @@ export function DeviceConsole() {
       </div>
 
       <div className="console-secondary">
-        <button type="button" className="button button-secondary" onClick={syncNow}>
+        <button
+          type="button"
+          className="button button-secondary"
+          onClick={syncNow}
+          disabled={state.syncing}
+        >
+          {state.syncing ? (
+            <Loader2 size={15} strokeWidth={1.9} className="spin" aria-hidden="true" />
+          ) : (
+            <RefreshCw size={15} strokeWidth={1.8} aria-hidden="true" />
+          )}
           {state.syncing ? "Syncing…" : "Sync Now"}
           {pendingCount > 0 ? <span className="button-badge">{pendingCount}</span> : null}
         </button>
@@ -133,25 +160,37 @@ export function DeviceConsole() {
         </button>
         <button
           type="button"
-          className={`button button-icon ${state.soundEnabled ? "is-on" : ""}`}
-          aria-pressed={state.soundEnabled}
+          className="toggle"
+          role="switch"
+          aria-checked={state.soundEnabled}
           onClick={toggleSound}
         >
-          {state.soundEnabled ? (
-            <Volume2 size={16} strokeWidth={1.8} aria-hidden="true" />
-          ) : (
-            <VolumeX size={16} strokeWidth={1.8} aria-hidden="true" />
-          )}
-          Sound
+          <span className="toggle-label">
+            {state.soundEnabled ? (
+              <Volume2 size={15} strokeWidth={1.8} aria-hidden="true" />
+            ) : (
+              <VolumeX size={15} strokeWidth={1.8} aria-hidden="true" />
+            )}
+            Sound
+          </span>
+          <span className="toggle-track" aria-hidden="true">
+            <span className="toggle-thumb" />
+          </span>
         </button>
         <button
           type="button"
-          className={`button button-icon ${state.rotationEnabled ? "is-on" : ""}`}
-          aria-pressed={state.rotationEnabled}
+          className="toggle"
+          role="switch"
+          aria-checked={state.rotationEnabled}
           onClick={toggleRotation}
         >
-          <RotateCw size={16} strokeWidth={1.8} aria-hidden="true" />
-          Rotation
+          <span className="toggle-label">
+            <RotateCw size={15} strokeWidth={1.8} aria-hidden="true" />
+            Rotation
+          </span>
+          <span className="toggle-track" aria-hidden="true">
+            <span className="toggle-thumb" />
+          </span>
         </button>
       </div>
     </section>

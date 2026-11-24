@@ -4,15 +4,39 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#070d15" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#060b12" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#eef3f9" />
     <meta
       name="description"
       content="An interactive software simulation of the CLAMOTAG RFID Reader R1: card taps, access decisions, offline buffering and provisioning."
     />
+    <script>
+      // Apply the persisted theme before first paint so the page never
+      // flashes the wrong colour scheme. Mirrors src/hooks/useTheme.ts:
+      // stored value wins, otherwise system preference, defaulting to dark.
+      (function () {
+        var theme = "dark";
+        try {
+          var stored = window.localStorage.getItem("clamotag.theme");
+          if (stored === "light" || stored === "dark") {
+            theme = stored;
+          } else if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: light)").matches
+          ) {
+            theme = "light";
+          }
+        } catch (e) {
+          /* storage unavailable — fall back to the default theme */
+        }
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
     <title>CLAMOTAG RFID Reader — Product Experience</title>
